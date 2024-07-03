@@ -1,5 +1,4 @@
 import relationalStore from '@ohos.data.relationalStore'
-import { BusinessError } from '@kit.BasicServicesKit'
 import { TABLE_MAN_HOURS } from '../../constant/DbConstants'
 
 export class ManHoursDBModel {
@@ -20,13 +19,12 @@ export class ManHoursDBModel {
       'total_Time': totalTime
     };
 
-    this.store.insert(TABLE_MAN_HOURS, valueBucket, (err: BusinessError, rowId: number) => {
-      if (err) {
-        console.error(`el, Failed to insert data. Code:${err.code}, message:${err.message}`);
-        return;
-      }
-      console.info(`el, Succeeded in inserting data. rowId:${rowId}`);
-    })
+    try {
+      let result = this.store.insertSync(TABLE_MAN_HOURS, valueBucket)
+      console.info(`el, Succeeded in inserting data. rowId:${result}`);
+    } catch (err) {
+      console.error(`el, Failed to insert data. Code:${err.code}, message:${err.message}`);
+    }
   }
 
   async markDeleteRowById(id: number) {
@@ -37,14 +35,12 @@ export class ManHoursDBModel {
 
     let predicates1 = new relationalStore.RdbPredicates(TABLE_MAN_HOURS);
     predicates1.equalTo('id', id);
-    if (this.store !== undefined) {
-      this.store.update(valueBucket, predicates1, (err: BusinessError, rows: number) => {
-        if (err) {
-          console.error(`el, Failed to update data. Code:${err.code}, message:${err.message}`);
-          return;
-        }
-        console.info(`el, Succeeded in updating data. row count: ${rows}`);
-      })
+    try {
+      let result = this.store.updateSync(valueBucket, predicates1)
+      console.info(`el, Succeeded in updating data. row count: ${result}`);
+
+    } catch (err) {
+      console.error(`el, Failed to update data. Code:${err.code}, message:${err.message}`);
     }
   }
 

@@ -31,6 +31,7 @@ export class CommonDBViewModel {
       return this.manHoursDBModel?.sumRangeTotalTime(startTime, endTime) ?? null
     }
     else {
+      console.log("el, sumRangeTotalTime fail: not ready!")
       return new Promise((_resolve, reject) => {
         reject("DB is not ready!")
       })

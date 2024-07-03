@@ -42,6 +42,7 @@ struct HomePage {
   }
 
   private async init(context: Context) {
+    console.log("el, call init from HomePage")
     await preferencesHelper.init(context)
     await commonDBViewModel.init(context)
   }

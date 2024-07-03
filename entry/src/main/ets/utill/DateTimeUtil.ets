@@ -19,7 +19,6 @@ export class DateTimeUtil {
   static currentDayTimeStamp(): [number, number] {
     let dateTime = new Date()
     let offset = dateTime.getTimezoneOffset() * 60 * 1000
-    console.log(`el, =========== offset: ${offset} =========`)
     let d = Math.floor(dateTime.getTime() / DateTimeUtil.DAY_MILL_SECOND_TIME) * DateTimeUtil.DAY_MILL_SECOND_TIME
     return [Math.floor(d + offset), Math.floor(d + DateTimeUtil.DAY_MILL_SECOND_TIME + offset)]
   }
